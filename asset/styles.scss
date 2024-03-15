@@ -1,0 +1,115 @@
+$width: 1500px;
+$height: 700px;
+$font: "Arial Rounded MT Bold";
+$size-text: 32px;
+$color-text: black;
+$color-bg-1: #683d85;
+$color-bg-2: #3a94a9;
+$font-weight: bold;
+$transform: capitalize;
+@mixin mixin-position($area:"") {
+  @if($area == "father") {
+    position: relative;
+  }
+  @if($area == "child") {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+@mixin mixin-flex {
+  display: flex;
+}
+.container {
+  height: $height;
+  width: $width;
+  background-image: url("/asset/img/bg1.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  @include mixin-flex;
+
+  .board-game {
+    flex: 2;
+    position: relative;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.5s ease;
+  }
+  .info-game {
+    font-family: $font;
+    font-size: $size-text;
+    flex: 1;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    background-color: $color-bg-1;
+    position: relative;
+    p {
+      text-transform: $transform;
+      font-size: $size-text;
+      font-weight: $font-weight;
+      margin: 10px 0 0 130px;
+    }
+    #timer-text {
+      color: black;
+      position: absolute;
+      top: 100px;
+      left: -30px;
+    }
+    #timer-bar-container {
+      position: absolute;
+      top: 60px;
+      left: 60px;
+      z-index: 1;
+      width: 70%;
+      height: 30px;
+      background-color: $color-bg-2;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    #timer-bar {
+      @include mixin-position("child");
+      right: 0;
+      bottom: 0;
+      background-color: #4caf50;
+      transition: width linear;
+    }
+    #timer-percent {
+      color: black;
+      font-size: 20px;
+      margin-top: 5px;
+      @include mixin-position("child");
+    }
+  }
+}
+.control {
+  @include mixin-position("child");
+  li {
+    list-style: none;
+    #pause {
+      width: 50px;
+      height: 50px;
+      background-image: url("asset/img/mute.png");
+    }
+  }
+}
+#game-dialog {
+  @include mixin-position("child");
+  margin: 250px 0 0 250px;
+  padding: 50px 70px;
+  background-color: $color-bg-2;
+  p {
+    font-size: $font;
+    font-family: $size-text + 10px;
+  }
+}
+#game {
+  @include mixin-position("child");
+  margin: 250px 0 0 250px;
+  .pokemonCells {
+    display: inline-block;
+    width: 30px;
+    height: 40px;
+    padding: 0;
+  }
+}

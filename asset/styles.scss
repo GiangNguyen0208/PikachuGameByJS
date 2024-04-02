@@ -3,6 +3,7 @@ $height: 700px;
 $font: "Arial Rounded MT Bold";
 $size-text: 32px;
 $color-text: black;
+
 $color-bg-1: #683d85;
 $color-bg-2: #3a94a9;
 $font-weight: bold;
@@ -111,5 +112,8 @@ $transform: capitalize;
     width: 30px;
     height: 40px;
     padding: 0;
+  }
+  .row {
+    display: flex;
   }
 }

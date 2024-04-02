@@ -103,5 +103,8 @@
   height: 40px;
   padding: 0;
 }
+#game .row {
+  display: flex;
+}
 
 /*# sourceMappingURL=styles.css.map */

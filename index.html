@@ -1,48 +1,111 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pikachu Game</title>
-
-    <link rel="stylesheet" href="asset/styles.css">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>FE Semester</title>
+    <link rel="stylesheet" href="./asset/styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="board-game">
-            <div id="game"></div>
-            <div id="game-dialog">
-                <p>Chọn mức độ của trò chơi:</p>
-                <select id="game-level">
-                    <option value="1">Mức độ 1</option>
-                    <option value="2">Mức độ 2</option>
-                    <option value="3">Mức độ 3</option>
-                    <option value="4">Mức độ 4</option>
-                    <option value="5">Mức độ 5</option>
-                    <option value="6">Mức độ 6</option>
-                </select>
-                <button onclick="startGame()">Bắt đầu</button>
-            </div>
-        </div>
-        <div class="info-game">
-            <p>Thời gian</p>
-            <ul class="control">
-                <li id="pause"></li>
-                <li id="hintchecker"></li>
-                <li id="mute"></li>
-                <li id="unmute"></li>
-            </ul>
-            <div id="timer-bar-container">
-                <div id="timer-bar"></div>
-                <p id="timer-percent"></p>
-            </div>
-            <div class="display-level">
 
-            </div>
-            <p id="timer-text"></p>
+<div id="loading" style="opacity: 0%">
+    <table id="maintable" class="mt2">
+        <tbody>
+        <tr>
+            <td class="status">
+                <div>
+                    <span class="txtstatus">Bàn</span>
+                    <span id="level">1</span>
+                    <span class="txtstatus">Lượt đổi</span>
+                    <span id="blood">15</span>
+                    <span class="txtstatus">Điểm</span>
+                    <span id="score">0</span>
+                    <span id="skip">
+                        <div class="change_level">
+                            <span class="txtstatus">Đổi level</span>
+                            <div class="col">
+                                <button class="lev" onclick="el.level1()">Cấp độ 1</button>
+                                <button class="lev" onclick="el.level2()">Cấp độ 2</button>
+                                <button class="lev" onclick="el.level3()">Cấp độ 3</button>
+                            </div>
+                            <div class="col">
+                                <button class="lev" onclick="el.level4()">Cấp độ 4</button>
+                                <button class="lev" onclick="el.level5()">Cấp độ 5</button>
+                                <button class="lev" onclick="el.level6()">Cấp độ 6</button>
+                            </div>
+                        </div>
+                    </span>
+                    <div id="gameInstructions" class="game-instructions" style="display: none">
+                        <h2>Hướng dẫn chơi game</h2>
+                        <p>
+                            Chào mừng bạn đến với trò chơi Pikachu! Dưới đây là hướng dẫn cách chơi:
+                        </p>
+                        <!-- Thêm hướng dẫn cụ thể cho mỗi level -->
+                        <div value="1" id="level1Instructions" class="level-instructions" style="visibility: hidden">
+                            <p>Hướng dẫn cách chơi level 1.</p>
+                            <button onclick="el.level1()"> Vào game</button>
+                        </div>
+                        <div value="2" id="level2Instructions" class="level-instructions" style="visibility: hidden">
+                            <p>Hướng dẫn cách chơi level 2.</p>
+                            <button onclick="el.level2()"> Vào game</button>
+                        </div>
+                        <div value="3" id="level2Instructions" class="level-instructions" style="visibility: hidden">
+                            <p>Hướng dẫn cách chơi level 3.</p>
+                            <button onclick="el.level3()"> Vào game</button>
+                        </div>
+                        <div value="4" id="level2Instructions" class="level-instructions" style="visibility: hidden">
+                            <p>Hướng dẫn cách chơi level 4.</p>
+                            <button onclick="el.level4()"> Vào game</button>
+                        </div>
+                        <div value="4" id="level2Instructions" class="level-instructions" style="visibility: hidden">
+                            <p>Hướng dẫn cách chơi level 5.</p>
+                            <button onclick="el.level5()"> Vào game</button>
+                        </div>
+                        <div value="4" id="level2Instructions" class="level-instructions" style="visibility: hidden">
+                            <p>Hướng dẫn cách chơi level 6.</p>
+                            <button onclick="el.level6()"> Vào game</button>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td id="board" class="playing"></td>
+            <td class="timebar" valign="bottom">
+                <div id="timebar" style="height: 375px;"></div>
+                <div class="timetxt">Thời gian</div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="btn_option">
+                <input type="button" id="gPause" name="Button" value="Tạm dừng" onclick="pause_game()">
+                <input type="button" name="change" id="change_block" value="Đổi vị trí" onclick="change_block()">
+                <input type="button" id="gReplay" name="Button" value="Chơi lại" onclick="el.restart()">
+                <input type="button" id="change_sound" name="Button" value="Tắt nhạc nền">
+                <input type="button" id="gAnotherLV" name="Button" value="Chọn cấp độ khác" onclick="open_menu()">
+            </td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="choose_level" style="visibility: visible">
+    <p class="level_title">Chọn cấp độ</p>
+    <button class="close_level" onclick="continue_game()">+</button>
+    <div class="row">
+        <div class="column">
+            <button class="level" onclick="el.level1()">Cấp độ 1</button>
+            <button class="level" onclick="el.level2()">Cấp độ 2</button>
+            <button class="level" onclick="el.level3()">Cấp độ 3</button>
+        </div>
+        <div class="column">
+            <button class="level" onclick="el.level4()">Cấp độ 4</button>
+            <button class="level" onclick="el.level5()">Cấp độ 5</button>
+            <button class="level" onclick="el.level6()">Cấp độ 6</button>
         </div>
     </div>
-    <script src="asset/controller.js"></script>
+</div>
+
+<script src="./asset/js/jquery-3.6.3.min.js"></script>
+<script src="./asset/js/jhCore-1.54.js"></script>
+<script src="./asset/js/pikachu.js"></script>
 </body>
 </html>
